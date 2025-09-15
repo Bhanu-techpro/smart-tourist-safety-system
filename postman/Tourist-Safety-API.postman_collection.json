@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+		"name": "Tourist Safety API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{
+    "email": "admin@example.com",
+    "password": "adminpassword"
+}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tourist",
+			"item": [
+				{
+					"name": "Register Tourist (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{
+    "name": "Test Tourist",
+    "email": "test.tourist@example.com",
+    "password": "password123",
+    "dateOfBirth": "1998-01-01",
+    "nationality": "German",
+    "passportNumber": "G12345678",
+    "itinerary": {
+        "startDate": "2025-11-01",
+        "endDate": "2025-11-20",
+        "destinations": ["Berlin", "Munich"]
+    },
+    "emergencyContacts": []
+}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tourist/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tourist",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tourist by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{touristToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tourist/your_tourist_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tourist",
+								"your_tourist_id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emergency",
+			"item": [
+				{
+					"name": "Panic Button",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{touristToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{
+    "location": {
+        "latitude": 12.9716,
+        "longitude": 77.5946
+    }
+}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/emergency/panic",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"emergency",
+								"panic"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000/api"
+		},
+		{
+			"key": "adminToken",
+			"value": ""
+		},
+		{
+			"key": "touristToken",
+			"value": ""
+		}
+	]
+}

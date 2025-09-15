@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../docker/Dockerfile.backend
+    container_name: smart-tourist-backend
+    restart: unless-stopped
+    env_file:
+      - ../backend/.env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  dashboard:
+    build:
+      context: ../dashboard
+      dockerfile: ../docker/Dockerfile.dashboard
+    container_name: smart-tourist-dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    container_name: smart-tourist-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  # Optional: Add a PostgreSQL service if you use the SQL schemas
+  # postgres:
+  #   image: postgres:13-alpine
+  #   container_name: smart-tourist-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: smart_tourist_pg
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - app-network
+
+volumes:
+  mongo-data:
+  # postgres-data:
+
+networks:
+  app-network:
+    driver: bridge

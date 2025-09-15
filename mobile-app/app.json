@@ -1,0 +1,7 @@
+{
+  "name": "SmartTouristApp",
+  "displayName": "Smart Tourist Safety",
+  "android": {
+    "package": "com.anonymous.smarttouristapp"
+  }
+}
